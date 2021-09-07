@@ -3,9 +3,7 @@ const db = require('../db')
 class UserController {
     async createUser(req,res){
         const {name,surname} = req.body
-        console.log(name,surname)
         const newPerson = await db.query('insert into person (name,surname) values ($1,$2) RETURNING *',[name,surname])
-        console.log(newPerson.rows)
         res.sendStatus(200)
     }
     async getUsers(req,res){
@@ -23,7 +21,6 @@ class UserController {
         res.send(user.rows)
     }
     async deleteUser(req,res){
-        console.log(123)
         const id = req.params.id
         const user = await db.query('DELETE FROM person where id = $1',[id])
         res.send(user.rows)
